@@ -1,30 +1,31 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './modules/users/users.module';
-import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { BrandsModule } from './modules/brands/brands.module';
+import { BrandsModule } from './brands/brands.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { ProductsModule } from './modules/products/products.module';
+import { ProductsModule } from './products/products.module';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
-import { VariantsModule } from './modules/variants/variants.module';
-import { ProductCategoriesModule } from './modules/product-categories/product-categories.module';
-import { CategoriesModule } from './modules/categories/categories.module';
+import { VariantsModule } from './variants/variants.module';
+import { ProductCategoriesModule } from './product-categories/product-categories.module';
+import { CategoriesModule } from './categories/categories.module';
 import { DataloaderModule } from './common/modules/dataloader/dataloader.module';
 import { DataLoaderService } from './common/modules/dataloader/dataloader.service';
-import { OrdersModule } from './modules/orders/orders.module';
-import { LikesModule } from './modules/likes/likes.module';
-import { RolesModule } from './modules/roles/roles.module';
+import { OrdersModule } from './orders/orders.module';
+import { LikesModule } from './likes/likes.module';
+import { RolesModule } from './roles/roles.module';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { CartsModule } from './modules/carts/carts.module';
-import { CartsDetailsModule } from './modules/carts-details/carts-details.module';
-import { PaymentsModule } from './modules/payments/payments.module';
+import { CartsModule } from './carts/carts.module';
+import { CartsDetailsModule } from './carts-details/carts-details.module';
+import { PaymentsModule } from './payments/payments.module';
 import { AppService } from './app.service';
-import { FilesModule } from './modules/files/files.module';
-import { EmailModule } from './modules/email/email.module';
+import { FilesModule } from './files/files.module';
+import { EmailModule } from './email/email.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { validate } from './env.validation';
 import { PaginationModule } from './common/modules/pagination/pagination.module';
+import { PrismaModule } from './common/modules/prisma/prisma.module';
 
 @Module({
   imports: [
@@ -79,6 +80,7 @@ import { PaginationModule } from './common/modules/pagination/pagination.module'
     FilesModule,
     EmailModule,
     PaginationModule,
+    PrismaModule,
   ],
   controllers: [],
   providers: [JwtService, AppService],

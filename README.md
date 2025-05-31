@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 # shirt-store-api
-=======
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -28,6 +27,12 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Seed Database
+In order to populate the database execute:
+```bash
+inserts.sql 
+```
+on Query editor of database.
 ## Project setup
 
 ```bash
@@ -99,4 +104,4 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
->>>>>>> 2eb0a54 (Auth,User Module started)
+

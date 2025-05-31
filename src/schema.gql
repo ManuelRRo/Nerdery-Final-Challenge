@@ -36,18 +36,17 @@ enum TextColors {
   PURPLE
 }
 
-type Brand {
-  id: String!
-  name: String!
-  products(offset: Int!, limit: Int!): [Products!]!
-}
-
 type Products {
   id: String!
   name: String!
   price: Float!
-  brand: Brand!
   Variants: [Variants!]!
+}
+
+type Brand {
+  id: String!
+  name: String!
+  products(offset: Int!, limit: Int!): [Products!]!
 }
 
 type Meta {

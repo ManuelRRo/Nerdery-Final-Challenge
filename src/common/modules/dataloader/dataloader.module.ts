@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DataLoaderService } from './dataloader.service';
-import { VariantsModule } from 'src/modules/variants/variants.module';
+import { VariantsModule } from 'src/variants/variants.module';
 
 @Module({
   providers: [DataLoaderService],

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from 'generated/prisma';
-import { GetProductQueryDto } from 'src/modules/products/args/getProductQuery.args';
+import { GetProductQueryDto } from 'src/products/args/getProductQuery.args';
 
 @Injectable()
 export class PaginationService {

@@ -1,8 +1,6 @@
 import {
   CanActivate,
   ExecutionContext,
-  forwardRef,
-  Inject,
   Injectable,
   Logger,
   UnauthorizedException,
@@ -10,7 +8,7 @@ import {
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { UsersService } from 'src/modules/users/users.service';
+import { UsersService } from 'src/users/users.service';
 import { ContextWithUser, TokenPayload } from '../dtos/UserRole.dto';
 import { AppService } from 'src/app.service';
 

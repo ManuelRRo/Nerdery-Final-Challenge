@@ -273,7 +273,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/manuel/ravn/nerderyFinalProject/shirt-store-api/generated/prisma",
+      "value": "/home/manuel/repos/arreglar bug/Nerdery-Final-Challenge/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -289,7 +289,7 @@ const config = {
     "previewFeatures": [
       "strictUndefinedChecks"
     ],
-    "sourceFilePath": "/home/manuel/ravn/nerderyFinalProject/shirt-store-api/prisma/schema.prisma",
+    "sourceFilePath": "/home/manuel/repos/arreglar bug/Nerdery-Final-Challenge/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
