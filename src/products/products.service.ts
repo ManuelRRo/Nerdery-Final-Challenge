@@ -189,7 +189,7 @@ export class ProductsService {
       where: { id: productId },
       include: {
         variants: {
-          where: { stock: 3 }, // Only variants with exactly 3 in stock
+          where: { stock: 3 },
           include: { file: true },
         },
         brand: true,

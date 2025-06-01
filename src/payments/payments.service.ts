@@ -30,11 +30,15 @@ export class PaymentsService {
   ): Promise<string | null> {
     console.log('iduser', userSign);
     const currency = 'usd';
-    const order = await this.orderService.createOrder(userSign.userId);
     const cart = await this.cartService.getCartByUserID(userSign.userId);
     const cartDetails = await this.cartDetailService.getCartDetailByCartId(
       cart as string,
     );
+    const order = await this.orderService.createOrder(
+      userSign.userId,
+      cartDetails,
+    );
+    console.log('ORDER ID', order.id);
     const amount = cartDetails.reduce((sum, item) => {
       return sum + item.price * item.quantity;
     }, 0);
@@ -123,7 +127,12 @@ export class PaymentsService {
       },
     };
 
-    return await this.prisma.payments.create({ data: paymentInit });
+    const payment = await this.prisma.payments.create({ data: paymentInit });
+    const variant =
+      await this.orderService.getOrderByPaymentIntent(paymentIntent_id);
+    console.log('VARIANTES DE LA ORDEN PAGADA', variant?.orderDetails);
+
+    return payment;
   }
 
   async updateStatusByPaymentIntent(paymentIntent: string, status: string) {

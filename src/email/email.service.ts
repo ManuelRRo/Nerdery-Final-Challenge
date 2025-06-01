@@ -12,8 +12,8 @@ export class EmailService {
     const mail: MailDataRequired = {
       to: recipient,
       from: 'manrico5670@gmail.com', //Approved sender ID in Sendgrid
-      subject: 'Test email',
-      content: [{ type: 'text/plain', value: body }],
+      subject: 'Tshirt last products on sale Take It!',
+      content: [{ type: 'text/html', value: body }],
     };
     await this.sendGridClient.send(mail);
   }

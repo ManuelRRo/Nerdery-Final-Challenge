@@ -26,6 +26,7 @@ import { validate } from './env.validation';
 import { PaginationModule } from './common/modules/pagination/pagination.module';
 import { PrismaModule } from './common/modules/prisma/prisma.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { TestingModule } from './testing/testing.module';
 
 @Module({
   imports: [
@@ -75,6 +76,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     EmailModule,
     PaginationModule,
     PrismaModule,
+    TestingModule,
   ],
   controllers: [],
   providers: [JwtService, AppService],

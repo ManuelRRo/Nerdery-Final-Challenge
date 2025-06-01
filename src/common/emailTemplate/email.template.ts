@@ -1,0 +1,4 @@
+export function getEmailBody(name, imgUrl) {
+  const body = `"<html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Email con Imagen</title></head><body style=\"margin: 0; padding: 20px; font-family: Arial, sans-serif; background-color: #f5f5f5;\"><div style=\"max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px;\"><h1 style=\"color: #333; font-size: 24px; margin-bottom: 20px;\">Solo quedan 3 no pierdas la oportunidad</h1><p style=\"color: #666; font-size: 16px; line-height: 1.5;\"></p><img src=\"${imgUrl}\" alt=\"${name}\" style=\"display: block; max-width: 100%; height: auto; margin: 20px 0; border: 1px solid #ddd;\" width=\"600\"><p style=\"color: #888; font-size: 14px; font-style: italic;\">¿No ves la imagen? Asegúrate de habilitar la visualización de imágenes en tu cliente de correo.</p></div></body></html>"`;
+  return body;
+}
