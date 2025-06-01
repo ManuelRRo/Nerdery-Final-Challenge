@@ -64,6 +64,21 @@ export class VariantsService {
     return mappedResults;
   }
 
+  async getVariantsWithStockThree(productId: string) {
+    const variants = await this.prisma.variants.findMany({
+      where: {
+        product_id: productId,
+        stock: 3,
+      },
+      include: {
+        product: true,
+        file: true,
+      },
+    });
+
+    return variants;
+  }
+
   _mapResultToIds(productIds: string[], variants: Variants[]): Variants[][] {
     return productIds.map(
       (id) =>

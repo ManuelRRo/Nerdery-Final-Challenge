@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { VariantsService } from './variants.service';
 import { VariantsResolver } from './variants.resolver';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { VariantTasksService } from './jobs/lowVariantStock.jobs';
+import { PrismaModule } from 'src/common/modules/prisma/prisma.module';
 
 @Module({
-  providers: [VariantsResolver, VariantsService, PrismaService],
+  imports: [PrismaModule],
+  providers: [VariantsResolver, VariantsService, VariantTasksService],
   exports: [VariantsService],
 })
 export class VariantsModule {}

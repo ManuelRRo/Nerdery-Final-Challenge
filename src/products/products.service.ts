@@ -183,4 +183,18 @@ export class ProductsService {
 
     return true;
   }
+
+  async checkProductStock(productId: string) {
+    const product = await this.prisma.products.findUnique({
+      where: { id: productId },
+      include: {
+        variants: {
+          where: { stock: 3 }, // Only variants with exactly 3 in stock
+          include: { file: true },
+        },
+        brand: true,
+      },
+    });
+    return product;
+  }
 }

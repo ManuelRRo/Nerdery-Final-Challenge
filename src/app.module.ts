@@ -22,20 +22,14 @@ import { PaymentsModule } from './payments/payments.module';
 import { AppService } from './app.service';
 import { FilesModule } from './files/files.module';
 import { EmailModule } from './email/email.module';
-import { ThrottlerModule } from '@nestjs/throttler';
 import { validate } from './env.validation';
 import { PaginationModule } from './common/modules/pagination/pagination.module';
 import { PrismaModule } from './common/modules/prisma/prisma.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
-    //check
-    // ThrottlerModule.forRoot([
-    //   {
-    //     ttl: 5000,
-    //     limit: 3,
-    //   },
-    // ]),
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       validate,
       isGlobal: true,
