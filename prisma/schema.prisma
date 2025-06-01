@@ -141,6 +141,7 @@ model ProductCategories {
 model Likes {
   products Products   @relation(fields: [productId], references: [id])
   productId String // relation scalar field (used in the `@relation` attribute above)
+  createdAt DateTime @default(now())
   user Users @relation(fields: [user_id],references: [id])
   user_id String
   @@id([user_id,productId])

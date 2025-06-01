@@ -23,5 +23,6 @@ import { VariantsModule } from 'src/variants/variants.module';
     EmailService,
     SendGridClient,
   ],
+  exports: [CartsDetailsService],
 })
 export class CartsDetailsModule {}

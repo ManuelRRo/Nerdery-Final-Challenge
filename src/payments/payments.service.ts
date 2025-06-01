@@ -6,6 +6,8 @@ import { PaymentInput } from './inputs/payments.input';
 import { Payments, Prisma } from 'generated/prisma';
 import { OrdersService } from '../orders/orders.service';
 import { SignInData } from 'src/common/dtos/UserRole.dto';
+import { CartService } from 'src/carts/carts.service';
+import { CartsDetailsService } from 'src/carts-details/carts-details.service';
 
 @Injectable()
 export class PaymentsService {
@@ -14,6 +16,8 @@ export class PaymentsService {
     private readonly appService: AppService,
     private readonly prisma: PrismaService,
     private readonly orderService: OrdersService,
+    private readonly cartService: CartService,
+    private readonly cartDetailService: CartsDetailsService,
   ) {
     this.stripe = new Stripe(this.appService.configStripeSecret() as string, {
       typescript: true,
@@ -24,11 +28,16 @@ export class PaymentsService {
     input: PaymentInput,
     userSign: SignInData,
   ): Promise<string | null> {
-    const { amount, currency } = input;
-
     console.log('iduser', userSign);
+    const currency = 'usd';
     const order = await this.orderService.createOrder(userSign.userId);
-
+    const cart = await this.cartService.getCartByUserID(userSign.userId);
+    const cartDetails = await this.cartDetailService.getCartDetailByCartId(
+      cart as string,
+    );
+    const amount = cartDetails.reduce((sum, item) => {
+      return sum + item.price * item.quantity;
+    }, 0);
     try {
       const paymentIntent = await this.stripe.paymentIntents.create({
         amount,
@@ -42,7 +51,10 @@ export class PaymentsService {
         order.id,
         paymentIntent.id,
         paymentIntent.status,
-        input,
+        {
+          amount,
+          currency,
+        },
       );
       const jsonString = JSON.stringify(paymentIntent.client_secret);
       return jsonString;

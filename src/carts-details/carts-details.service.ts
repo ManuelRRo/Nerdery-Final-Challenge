@@ -40,4 +40,12 @@ export class CartsDetailsService {
       },
     });
   }
+
+  async getCartDetailByCartId(cart_id: string) {
+    return await this.prisma.cartDetails.findMany({
+      where: {
+        cart_id,
+      },
+    });
+  }
 }

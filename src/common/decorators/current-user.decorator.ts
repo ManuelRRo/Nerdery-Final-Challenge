@@ -14,7 +14,8 @@ export const CurrentUser = createParamDecorator(
           'CurrentUser decorator requires GqlAuthGuard to be used first',
         );
       }
-      return ctx.user;
+      console.log('Current User', ctx.user);
+      return ctx.user.id;
     }
 
     // Handle HTTP/REST context

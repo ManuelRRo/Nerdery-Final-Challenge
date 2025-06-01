@@ -15785,16 +15785,19 @@ export namespace Prisma {
 
   export type LikesMinAggregateOutputType = {
     productId: string | null
+    createdAt: Date | null
     user_id: string | null
   }
 
   export type LikesMaxAggregateOutputType = {
     productId: string | null
+    createdAt: Date | null
     user_id: string | null
   }
 
   export type LikesCountAggregateOutputType = {
     productId: number
+    createdAt: number
     user_id: number
     _all: number
   }
@@ -15802,16 +15805,19 @@ export namespace Prisma {
 
   export type LikesMinAggregateInputType = {
     productId?: true | $Types.Skip
+    createdAt?: true | $Types.Skip
     user_id?: true | $Types.Skip
   }
 
   export type LikesMaxAggregateInputType = {
     productId?: true | $Types.Skip
+    createdAt?: true | $Types.Skip
     user_id?: true | $Types.Skip
   }
 
   export type LikesCountAggregateInputType = {
     productId?: true | $Types.Skip
+    createdAt?: true | $Types.Skip
     user_id?: true | $Types.Skip
     _all?: true | $Types.Skip
   }
@@ -15890,6 +15896,7 @@ export namespace Prisma {
 
   export type LikesGroupByOutputType = {
     productId: string
+    createdAt: Date
     user_id: string
     _count: LikesCountAggregateOutputType | null
     _min: LikesMinAggregateOutputType | null
@@ -15912,6 +15919,7 @@ export namespace Prisma {
 
   export type LikesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     productId?: boolean | $Types.Skip
+    createdAt?: boolean | $Types.Skip
     user_id?: boolean | $Types.Skip
     products?: boolean | ProductsDefaultArgs<ExtArgs> | $Types.Skip
     user?: boolean | UsersDefaultArgs<ExtArgs> | $Types.Skip
@@ -15919,6 +15927,7 @@ export namespace Prisma {
 
   export type LikesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     productId?: boolean | $Types.Skip
+    createdAt?: boolean | $Types.Skip
     user_id?: boolean | $Types.Skip
     products?: boolean | ProductsDefaultArgs<ExtArgs> | $Types.Skip
     user?: boolean | UsersDefaultArgs<ExtArgs> | $Types.Skip
@@ -15926,6 +15935,7 @@ export namespace Prisma {
 
   export type LikesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     productId?: boolean | $Types.Skip
+    createdAt?: boolean | $Types.Skip
     user_id?: boolean | $Types.Skip
     products?: boolean | ProductsDefaultArgs<ExtArgs> | $Types.Skip
     user?: boolean | UsersDefaultArgs<ExtArgs> | $Types.Skip
@@ -15933,10 +15943,11 @@ export namespace Prisma {
 
   export type LikesSelectScalar = {
     productId?: boolean | $Types.Skip
+    createdAt?: boolean | $Types.Skip
     user_id?: boolean | $Types.Skip
   }
 
-  export type LikesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"productId" | "user_id", ExtArgs["result"]["likes"], $Types.Skip>
+  export type LikesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"productId" | "createdAt" | "user_id", ExtArgs["result"]["likes"], $Types.Skip>
   export type LikesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     products?: boolean | ProductsDefaultArgs<ExtArgs> | $Types.Skip
     user?: boolean | UsersDefaultArgs<ExtArgs> | $Types.Skip
@@ -15958,6 +15969,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       productId: string
+      createdAt: Date
       user_id: string
     }, ExtArgs["result"]["likes"]>
     composites: {}
@@ -16385,6 +16397,7 @@ export namespace Prisma {
    */
   interface LikesFieldRefs {
     readonly productId: FieldRef<"Likes", 'String'>
+    readonly createdAt: FieldRef<"Likes", 'DateTime'>
     readonly user_id: FieldRef<"Likes", 'String'>
   }
     
@@ -19123,6 +19136,7 @@ export namespace Prisma {
 
   export const LikesScalarFieldEnum: {
     productId: 'productId',
+    createdAt: 'createdAt',
     user_id: 'user_id'
   };
 
@@ -19976,6 +19990,7 @@ export namespace Prisma {
     OR?: LikesWhereInput[] | $Types.Skip
     NOT?: LikesWhereInput | LikesWhereInput[] | $Types.Skip
     productId?: StringFilter<"Likes"> | string | $Types.Skip
+    createdAt?: DateTimeFilter<"Likes"> | Date | string | $Types.Skip
     user_id?: StringFilter<"Likes"> | string | $Types.Skip
     products?: XOR<ProductsScalarRelationFilter, ProductsWhereInput> | $Types.Skip
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput> | $Types.Skip
@@ -19983,6 +19998,7 @@ export namespace Prisma {
 
   export type LikesOrderByWithRelationInput = {
     productId?: SortOrder | $Types.Skip
+    createdAt?: SortOrder | $Types.Skip
     user_id?: SortOrder | $Types.Skip
     products?: ProductsOrderByWithRelationInput | $Types.Skip
     user?: UsersOrderByWithRelationInput | $Types.Skip
@@ -19994,6 +20010,7 @@ export namespace Prisma {
     OR?: LikesWhereInput[] | $Types.Skip
     NOT?: LikesWhereInput | LikesWhereInput[] | $Types.Skip
     productId?: StringFilter<"Likes"> | string | $Types.Skip
+    createdAt?: DateTimeFilter<"Likes"> | Date | string | $Types.Skip
     user_id?: StringFilter<"Likes"> | string | $Types.Skip
     products?: XOR<ProductsScalarRelationFilter, ProductsWhereInput> | $Types.Skip
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput> | $Types.Skip
@@ -20001,6 +20018,7 @@ export namespace Prisma {
 
   export type LikesOrderByWithAggregationInput = {
     productId?: SortOrder | $Types.Skip
+    createdAt?: SortOrder | $Types.Skip
     user_id?: SortOrder | $Types.Skip
     _count?: LikesCountOrderByAggregateInput | $Types.Skip
     _max?: LikesMaxOrderByAggregateInput | $Types.Skip
@@ -20012,6 +20030,7 @@ export namespace Prisma {
     OR?: LikesScalarWhereWithAggregatesInput[] | $Types.Skip
     NOT?: LikesScalarWhereWithAggregatesInput | LikesScalarWhereWithAggregatesInput[] | $Types.Skip
     productId?: StringWithAggregatesFilter<"Likes"> | string | $Types.Skip
+    createdAt?: DateTimeWithAggregatesFilter<"Likes"> | Date | string | $Types.Skip
     user_id?: StringWithAggregatesFilter<"Likes"> | string | $Types.Skip
   }
 
@@ -20827,36 +20846,42 @@ export namespace Prisma {
   }
 
   export type LikesCreateInput = {
+    createdAt?: Date | string | $Types.Skip
     products: ProductsCreateNestedOneWithoutLikesInput
     user: UsersCreateNestedOneWithoutLikesInput
   }
 
   export type LikesUncheckedCreateInput = {
     productId: string
+    createdAt?: Date | string | $Types.Skip
     user_id: string
   }
 
   export type LikesUpdateInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string | $Types.Skip
     products?: ProductsUpdateOneRequiredWithoutLikesNestedInput | $Types.Skip
     user?: UsersUpdateOneRequiredWithoutLikesNestedInput | $Types.Skip
   }
 
   export type LikesUncheckedUpdateInput = {
     productId?: StringFieldUpdateOperationsInput | string | $Types.Skip
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string | $Types.Skip
     user_id?: StringFieldUpdateOperationsInput | string | $Types.Skip
   }
 
   export type LikesCreateManyInput = {
     productId: string
+    createdAt?: Date | string | $Types.Skip
     user_id: string
   }
 
   export type LikesUpdateManyMutationInput = {
-
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string | $Types.Skip
   }
 
   export type LikesUncheckedUpdateManyInput = {
     productId?: StringFieldUpdateOperationsInput | string | $Types.Skip
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string | $Types.Skip
     user_id?: StringFieldUpdateOperationsInput | string | $Types.Skip
   }
 
@@ -21640,16 +21665,19 @@ export namespace Prisma {
 
   export type LikesCountOrderByAggregateInput = {
     productId?: SortOrder | $Types.Skip
+    createdAt?: SortOrder | $Types.Skip
     user_id?: SortOrder | $Types.Skip
   }
 
   export type LikesMaxOrderByAggregateInput = {
     productId?: SortOrder | $Types.Skip
+    createdAt?: SortOrder | $Types.Skip
     user_id?: SortOrder | $Types.Skip
   }
 
   export type LikesMinOrderByAggregateInput = {
     productId?: SortOrder | $Types.Skip
+    createdAt?: SortOrder | $Types.Skip
     user_id?: SortOrder | $Types.Skip
   }
 
@@ -22983,11 +23011,13 @@ export namespace Prisma {
   }
 
   export type LikesCreateWithoutUserInput = {
+    createdAt?: Date | string | $Types.Skip
     products: ProductsCreateNestedOneWithoutLikesInput
   }
 
   export type LikesUncheckedCreateWithoutUserInput = {
     productId: string
+    createdAt?: Date | string | $Types.Skip
   }
 
   export type LikesCreateOrConnectWithoutUserInput = {
@@ -23086,6 +23116,7 @@ export namespace Prisma {
     OR?: LikesScalarWhereInput[] | $Types.Skip
     NOT?: LikesScalarWhereInput | LikesScalarWhereInput[] | $Types.Skip
     productId?: StringFilter<"Likes"> | string | $Types.Skip
+    createdAt?: DateTimeFilter<"Likes"> | Date | string | $Types.Skip
     user_id?: StringFilter<"Likes"> | string | $Types.Skip
   }
 
@@ -23616,10 +23647,12 @@ export namespace Prisma {
   }
 
   export type LikesCreateWithoutProductsInput = {
+    createdAt?: Date | string | $Types.Skip
     user: UsersCreateNestedOneWithoutLikesInput
   }
 
   export type LikesUncheckedCreateWithoutProductsInput = {
+    createdAt?: Date | string | $Types.Skip
     user_id: string
   }
 
@@ -24674,6 +24707,7 @@ export namespace Prisma {
 
   export type LikesCreateManyUserInput = {
     productId: string
+    createdAt?: Date | string | $Types.Skip
   }
 
   export type CartsCreateManyUserInput = {
@@ -24714,15 +24748,18 @@ export namespace Prisma {
   }
 
   export type LikesUpdateWithoutUserInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string | $Types.Skip
     products?: ProductsUpdateOneRequiredWithoutLikesNestedInput | $Types.Skip
   }
 
   export type LikesUncheckedUpdateWithoutUserInput = {
     productId?: StringFieldUpdateOperationsInput | string | $Types.Skip
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string | $Types.Skip
   }
 
   export type LikesUncheckedUpdateManyWithoutUserInput = {
     productId?: StringFieldUpdateOperationsInput | string | $Types.Skip
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string | $Types.Skip
   }
 
   export type CartsUpdateWithoutUserInput = {
@@ -24789,6 +24826,7 @@ export namespace Prisma {
   }
 
   export type LikesCreateManyProductsInput = {
+    createdAt?: Date | string | $Types.Skip
     user_id: string
   }
 
@@ -24842,14 +24880,17 @@ export namespace Prisma {
   }
 
   export type LikesUpdateWithoutProductsInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string | $Types.Skip
     user?: UsersUpdateOneRequiredWithoutLikesNestedInput | $Types.Skip
   }
 
   export type LikesUncheckedUpdateWithoutProductsInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string | $Types.Skip
     user_id?: StringFieldUpdateOperationsInput | string | $Types.Skip
   }
 
   export type LikesUncheckedUpdateManyWithoutProductsInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string | $Types.Skip
     user_id?: StringFieldUpdateOperationsInput | string | $Types.Skip
   }
 
