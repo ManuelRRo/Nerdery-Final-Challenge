@@ -27,7 +27,7 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Seed Database
+## Seed Database on Development
 In order to populate the database execute:
 ```bash
 inserts.sql 
@@ -69,14 +69,19 @@ $ npm run test:cov
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+$ docker compose up --build
+```
+With this command you build nginx server, node nestjs app and postgres db.
+
+## Seed database on Deployment
+
+run the next command to seed database
+```bash
+$ docker exec -i shirts_store_db psql -U postgres -d db_shirts_store < backup.sql
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+
 
 ## Resources
 

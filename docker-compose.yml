@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    image: node
+    container_name: shirts_store_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    container_name: shirts_store_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass_nerdery
+      POSTGRES_DB: db_shirts_store
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+
+volumes:
+  postgres_data:

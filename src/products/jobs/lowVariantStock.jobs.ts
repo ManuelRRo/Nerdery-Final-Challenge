@@ -14,7 +14,7 @@ export class ProductTasksService {
   ) {}
   private readonly logger = new Logger(ProductTasksService.name);
 
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  @Cron(CronExpression.EVERY_12_HOURS)
   async sendProductEmailWithStockThree() {
     const lowStockProducts = await this.prisma.variants.findMany({
       where: {
