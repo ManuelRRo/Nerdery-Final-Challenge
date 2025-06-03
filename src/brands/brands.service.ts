@@ -1,25 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Brands } from 'generated/prisma';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
 import { CreateBrandInput } from './input/create-brand.input';
 import { PaginationArgs } from 'src/common/args/pagination.args';
+import { PrismaService } from '../common/modules/prisma/prisma.service';
 
 @Injectable()
 export class BrandsService {
   constructor(private prisma: PrismaService) {}
 
   async brands(args: PaginationArgs): Promise<Brands[]> {
-    return this.prisma.brands.findMany({
+    const { offset } = args;
+    if (offset < 0) {
+      throw new BadRequestException('offset can no be negative');
+    }
+
+    const brands = await this.prisma.brands.findMany({
       skip: args.offset,
       take: args.limit,
     });
+
+    if (!brands) {
+      console.log('brandsnot found');
+      throw new NotFoundException('Brands not found');
+    }
+
+    return brands;
   }
   async getBrandById(brandId: string) {
-    return this.prisma.brands.findFirst({
+    const brand = await this.prisma.brands.findFirst({
       where: {
         id: brandId,
       },
     });
+
+    if (!brand) {
+      throw new NotFoundException('Brand not found');
+    }
+
+    return brand;
   }
 
   async createBrand(input: CreateBrandInput) {

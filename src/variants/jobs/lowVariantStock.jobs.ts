@@ -5,7 +5,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 export class VariantTasksService {
   private readonly logger = new Logger(VariantTasksService.name);
 
-  @Cron(CronExpression.EVERY_5_SECONDS)
+  @Cron(CronExpression.EVERY_12_HOURS)
   handleCron() {
     this.logger.debug('Que ondas 5 seconds');
   }
