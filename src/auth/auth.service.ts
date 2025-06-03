@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { SignInData } from 'src/common/dtos/UserRole.dto';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { ForgotPasswordDto } from './dtos/forgotPasswd.dto';
 import { ResetPasswordDto } from './dtos/resetPasswd.dto';
 
@@ -25,16 +25,18 @@ export class AuthService {
 
   async authenticate(input: AuthInput): Promise<AuthResult> {
     const user = await this.validateUser(input);
-
+    console.log('user ', user);
     if (!user) {
       throw new UnauthorizedException();
     }
 
-    return this.signIn(user);
+    const token = this.signIn(user);
+
+    return token;
   }
   // eslint-disable-next-line @typescript-eslint/require-await
   async validateUser(input: AuthInput): Promise<SignInData | null> {
-    const user = await this.userService.findUserByname(input.email);
+    const user = await this.userService.findByUserByName(input.email);
 
     if (user && user.password === input.password) {
       return {
@@ -58,7 +60,7 @@ export class AuthService {
 
   async sendTokenToChangePassword(forgotPasswordDto: ForgotPasswordDto) {
     const { email } = forgotPasswordDto;
-    const user = await this.userService.findUserByname(email);
+    const user = await this.userService.findByUserByName(email);
     if (!user) {
       throw new NotFoundException();
     }
