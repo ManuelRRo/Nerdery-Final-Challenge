@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Variants } from 'generated/prisma';
-import { VariantWithProductInfo } from 'src/common/dtos/Variants.dto';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { VariantWithProductInfo } from '../common/dtos/Variants.dto';
+import { PrismaService } from '../common/modules/prisma/prisma.service';
 
 @Injectable()
 export class VariantsService {

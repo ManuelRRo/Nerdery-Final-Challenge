@@ -141,6 +141,7 @@ export class ProductsService {
   }
 
   async updateProduct(input: UpdateProductInput) {
+    console.log('Product infor update', input);
     return this.prisma.products.update({
       where: {
         id: input.id,

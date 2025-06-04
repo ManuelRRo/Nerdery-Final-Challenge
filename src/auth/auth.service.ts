@@ -11,9 +11,7 @@ import { SignInData } from 'src/common/dtos/UserRole.dto';
 import { UsersService } from '../users/users.service';
 import { ForgotPasswordDto } from './dtos/forgotPasswd.dto';
 import { ResetPasswordDto } from './dtos/resetPasswd.dto';
-
-type AuthInput = { email: string; password: string };
-type AuthResult = { sessionToken: string };
+import { AuthResult, LoginDto } from './dtos/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -23,9 +21,9 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async authenticate(input: AuthInput): Promise<AuthResult> {
+  async authenticate(input: LoginDto): Promise<AuthResult> {
     const user = await this.validateUser(input);
-    console.log('user ', user);
+
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -35,7 +33,7 @@ export class AuthService {
     return token;
   }
   // eslint-disable-next-line @typescript-eslint/require-await
-  async validateUser(input: AuthInput): Promise<SignInData | null> {
+  async validateUser(input: LoginDto): Promise<SignInData | null> {
     const user = await this.userService.findByUserByName(input.email);
 
     if (user && user.password === input.password) {
@@ -44,6 +42,7 @@ export class AuthService {
         email: user.email,
       };
     }
+
     return null;
   }
 

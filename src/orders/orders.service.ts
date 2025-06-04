@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CartDetails, Orders, Prisma } from 'generated/prisma';
 import { PaginationArgs } from 'src/common/args/pagination.args';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { PrismaService } from '../common/modules/prisma/prisma.service';
 
 @Injectable()
 export class OrdersService {

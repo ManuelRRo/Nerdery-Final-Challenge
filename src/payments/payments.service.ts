@@ -1,13 +1,13 @@
 import { Injectable, RawBodyRequest } from '@nestjs/common';
-import { AppService } from 'src/app.service';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { AppService } from '../app.service';
+import { PrismaService } from '../common/modules/prisma/prisma.service';
 import Stripe from 'stripe';
 import { PaymentInput } from './inputs/payments.input';
 import { Payments, Prisma } from 'generated/prisma';
 import { OrdersService } from '../orders/orders.service';
-import { SignInData } from 'src/common/dtos/UserRole.dto';
-import { CartService } from 'src/carts/carts.service';
-import { CartsDetailsService } from 'src/carts-details/carts-details.service';
+import { SignInData } from '../common/dtos/UserRole.dto';
+import { CartService } from '../carts/carts.service';
+import { CartsDetailsService } from '../carts-details/carts-details.service';
 
 @Injectable()
 export class PaymentsService {
@@ -38,7 +38,7 @@ export class PaymentsService {
       userSign.userId,
       cartDetails,
     );
-    console.log('ORDER ID', order.id);
+    console.log('ORDER ID', order.id, cart, cartDetails);
     const amount = cartDetails.reduce((sum, item) => {
       return sum + item.price * item.quantity;
     }, 0);
