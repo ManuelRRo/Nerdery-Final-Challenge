@@ -3,7 +3,7 @@ import { AppService } from '../app.service';
 import { PrismaService } from '../common/modules/prisma/prisma.service';
 import Stripe from 'stripe';
 import { PaymentInput } from './inputs/payments.input';
-import { Payments, Prisma } from 'generated/prisma';
+import { CartDetails, Payments, Prisma } from 'generated/prisma';
 import { OrdersService } from '../orders/orders.service';
 import { SignInData } from '../common/dtos/UserRole.dto';
 import { CartService } from '../carts/carts.service';
@@ -24,24 +24,22 @@ export class PaymentsService {
     });
   }
 
-  async createPaymentIntent(
-    input: PaymentInput,
-    userSign: SignInData,
-  ): Promise<string | null> {
-    console.log('iduser', userSign);
+  async createPaymentIntent(userSign: SignInData): Promise<string | null> {
     const currency = 'usd';
     const cart = await this.cartService.getCartByUserID(userSign.userId);
     const cartDetails = await this.cartDetailService.getCartDetailByCartId(
       cart as string,
     );
-    const order = await this.orderService.createOrder(
-      userSign.userId,
-      cartDetails,
-    );
-    console.log('ORDER ID', order.id, cart, cartDetails);
-    const amount = cartDetails.reduce((sum, item) => {
-      return sum + item.price * item.quantity;
-    }, 0);
+
+    let order;
+    const amount = this.calculateTotalAmount(cartDetails);
+
+    if (amount > 0) {
+      order = await this.orderService.createOrder(userSign.userId, cartDetails);
+    } else {
+      throw new Error('amount shoud be greater than 0');
+    }
+
     try {
       const paymentIntent = await this.stripe.paymentIntents.create({
         amount,
@@ -71,19 +69,19 @@ export class PaymentsService {
   async webhooksEvent(req: RawBodyRequest<Request>) {
     const signature = req.headers['stripe-signature'] as string;
     const payload = req.rawBody as Buffer;
-
-    // try {
-    const event = await this.stripe.webhooks.constructEvent(
-      payload,
-      signature,
-      this.appService.configWebhookSecret() as string,
-    );
-    // } catch (err) {
-    //   throw new Error(
-    //     `⚠️  Webhook signature verification failed.`,
-    //     err.message,
-    //   );
-    // }
+    let event;
+    try {
+      event = await this.stripe.webhooks.constructEvent(
+        payload,
+        signature,
+        this.appService.configWebhookSecret() as string,
+      );
+    } catch (err) {
+      throw new Error(
+        `⚠️  Webhook signature verification failed.`,
+        err.message,
+      );
+    }
     console.log(event);
     switch (event.type) {
       case 'charge.succeeded': {
@@ -128,9 +126,6 @@ export class PaymentsService {
     };
 
     const payment = await this.prisma.payments.create({ data: paymentInit });
-    const variant =
-      await this.orderService.getOrderByPaymentIntent(paymentIntent_id);
-    console.log('VARIANTES DE LA ORDEN PAGADA', variant?.orderDetails);
 
     return payment;
   }
@@ -144,5 +139,13 @@ export class PaymentsService {
       where: { payment_intent: paymentIntent },
       data: { status: data.status },
     });
+  }
+
+  calculateTotalAmount(cartDetails: CartDetails[]) {
+    const amount = cartDetails.reduce((sum, item) => {
+      return sum + item.price * item.quantity;
+    }, 0);
+
+    return amount;
   }
 }

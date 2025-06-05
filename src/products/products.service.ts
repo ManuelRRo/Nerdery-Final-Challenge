@@ -1,14 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Prisma, Products } from 'generated/prisma';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { PrismaService } from '../common/modules/prisma/prisma.service';
 import { ProductInput } from './inputs/create-product.input';
-import { Size, TextColor } from 'src/variants/model/variants.model';
-import { PaginationArgs } from 'src/common/args/pagination.args';
+import { Size, TextColor } from '../variants/model/variants.model';
+import { PaginationArgs } from '../common/args/pagination.args';
 import { ProductActiveInput } from './inputs/changeActiveProduct.input';
 import { UpdateProductInput } from './inputs/updateProduct.input';
 import { GetProductQueryDto } from './args/getProductQuery.args';
-import { PaginationService } from 'src/common/modules/pagination/pagination.service';
-import { Paginated } from 'src/common/modules/pagination/dtos/paginated.dto';
+import { PaginationService } from '../common/modules/pagination/pagination.service';
+import { Paginated } from '../common/modules/pagination/dtos/paginated.dto';
 
 @Injectable()
 export class ProductsService {
