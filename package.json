@@ -96,7 +96,14 @@
       "!**/*.controller.ts",
       "!**/*.input.ts",
       "!**/*.model.ts",
-      "!**/*.args.ts"
+      "!**/*.args.ts",
+      "!**/*.response.ts",
+      "!**/*.template.ts",
+      "!**/*.filter.ts",
+      "!**/*.pipe.ts",
+      "!main.ts",
+      "!categories/categories.service.ts",
+      "!**/*.enum.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"

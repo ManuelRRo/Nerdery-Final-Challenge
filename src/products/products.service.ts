@@ -141,7 +141,9 @@ export class ProductsService {
   }
 
   async updateProduct(input: UpdateProductInput) {
-    console.log('Product infor update', input);
+    if (!input) {
+      throw new Error('Input is null');
+    }
     return this.prisma.products.update({
       where: {
         id: input.id,
@@ -172,9 +174,17 @@ export class ProductsService {
   }
 
   async deleteProduct(id: string) {
-    await this.prisma.productCategories.deleteMany({
+    if (id === '') {
+      throw new Error('id can no be empty');
+    }
+
+    const deletedCategory = await this.prisma.productCategories.deleteMany({
       where: { productId: id },
     });
+
+    if (deletedCategory.count === 0) {
+      throw new Error('does not exist a product with that category');
+    }
 
     await this.prisma.variants.deleteMany({
       where: { product_id: id },

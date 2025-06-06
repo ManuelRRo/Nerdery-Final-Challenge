@@ -5,6 +5,8 @@ import { PaginationService } from '../common/modules/pagination/pagination.servi
 import { ProductsService } from './products.service';
 import { Prisma, Size, TextColor } from '../../generated/prisma';
 import { PaginationArgs } from '../common/args/pagination.args';
+import { ProductInput } from './inputs/create-product.input';
+import { Patch } from '@nestjs/common';
 
 describe('Products Service', () => {
   let mockPrismaService: DeepMockProxy<PrismaService>;
@@ -24,6 +26,7 @@ describe('Products Service', () => {
       ],
     }).compile();
     service = module.get<ProductsService>(ProductsService);
+    mockPrismaService.productCategories.deleteMany.mockClear();
   });
   it('should Be defined', () => {
     expect(mockPrismaService).toBeDefined();
@@ -172,7 +175,7 @@ describe('Products Service', () => {
   });
   describe('getProductsByBrandId', () => {
     it('should get a list of products by Brand id', async () => {
-      //Asserts
+      //Arrange
       const products = [
         {
           name: 'sunflower',
@@ -215,9 +218,144 @@ describe('Products Service', () => {
       });
     });
   });
-  describe('createProduct', () => {});
-  describe('updateProduct', () => {});
+  describe('createProduct', () => {
+    it('should be call with', async () => {
+      //Arrange
+      const input: ProductInput = {
+        brand_id: '0f5c8172-2c13-43c7-b47b-6d0111d307d1',
+        name: 'sunflower',
+        price: 123.12,
+        categoryId: '0f5c8172-2c13-43c7-b47b-6d0111d307d1',
+      };
+      const returnProduct = {
+        name: 'sunflower',
+        id: '0f5c8172-2c13-43c7-b47b-6d0111d307d1',
+        price: 25,
+        created_at: new Date(),
+        updated_at: new Date(),
+        active: true,
+        brand_id: '0f5c8172-2c13-43c7-c23o-6d0111d307d1',
+      };
+      mockPrismaService.products.create.mockResolvedValueOnce(returnProduct);
+      //Act
+      await service.createProduct(input);
+      //Asserts
+      expect(mockPrismaService.products.create).toHaveBeenCalledWith({
+        data: {
+          brand_id: input.brand_id,
+          name: input.name,
+          price: input.price,
+          productCategories: {
+            create: {
+              categoryId: input.categoryId,
+            },
+          },
+        },
+        include: {
+          productCategories: {
+            include: {
+              categories: true,
+            },
+          },
+          brand: true,
+        },
+      });
+    });
+  });
+  describe('updateProduct', () => {
+    it('update should be call with', async () => {
+      //Arrange
+      const updateProduct = {
+        name: 'sunflower',
+        id: '0f5c8172-2c13-43c7-b47b-6d0111d307d1',
+        price: 25,
+        created_at: new Date(),
+        updated_at: new Date(),
+        active: true,
+        brand_id: '0f5c8172-2c13-43c7-c23o-6d0111d307d1',
+      };
+      const input = {
+        id: '0f5c8172-2c13-43c7-b47b-6d0111d307d1',
+        patch: {
+          brand_id: '0f5c8172-2c13-43c7-b47b-6d0111d307d1',
+          name: 'Blue shirts',
+          price: 1231,
+          categoryId: '0f5c8172-2c13-43c7-b47b-6d0111d307d1',
+        },
+      };
+      mockPrismaService.products.update.mockResolvedValueOnce(updateProduct);
+      //Act
+      await service.updateProduct(input);
+
+      //Asserts
+      expect(mockPrismaService.products.update).toHaveBeenCalledWith({
+        where: {
+          id: input.id,
+        },
+        data: {
+          brand_id: input.patch.brand_id,
+          name: input.patch.name,
+          price: input.patch.price,
+          productCategories: {
+            connect: input.patch.categoryId
+              ? {
+                  productId_categoryId: {
+                    productId: input.id,
+                    categoryId: input.patch.categoryId,
+                  },
+                }
+              : undefined,
+          },
+        },
+      });
+    });
+  });
   describe('modifiedProductActiveField', () => {});
-  describe('deleteProduct', () => {});
-  describe('checkProducStock', () => {});
+  describe('deleteProduct', () => {
+    it('id should not be empty', async () => {
+      //Arrange
+      const id = '';
+      //Act
+      const result = service.deleteProduct(id);
+      //Asserts
+      await expect(result).rejects.toThrow(Error);
+    });
+    it('deleted row on productCategroies should exist', async () => {
+      //Arrange
+      const id = '0f5c8172-2c13-43c7-b478-6d0111d307d1';
+      mockPrismaService.productCategories.deleteMany.mockResolvedValueOnce({
+        count: 0,
+      });
+      //Act
+      const result = service.deleteProduct(id);
+      //Asserts
+      await expect(result).rejects.toThrow(Error);
+    });
+  });
+  describe('checkProducStock', () => {
+    it('', async () => {
+      const product = {
+        name: 'sunflower',
+        id: '0f5c8172-2c13-43c7-b47b-6d0111d307d1',
+        price: 25,
+        created_at: new Date(),
+        updated_at: new Date(),
+        active: true,
+        brand_id: '0f5c8172-2c13-43c7-c23o-6d0111d307d1',
+      };
+      const id = '2a21c8172-2c13-43c7-b47b-6d0111d307d1';
+      mockPrismaService.products.findUnique.mockResolvedValueOnce(product);
+      await service.checkProductStock(id);
+      expect(mockPrismaService.products.findUnique).toHaveBeenCalledWith({
+        where: { id },
+        include: {
+          variants: {
+            where: { stock: 3 },
+            include: { file: true },
+          },
+          brand: true,
+        },
+      });
+    });
+  });
 });
