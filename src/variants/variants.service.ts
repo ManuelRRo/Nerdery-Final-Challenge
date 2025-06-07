@@ -60,7 +60,7 @@ export class VariantsService {
     const variants = await this.getVariantsByProductIdLoader(productIds);
     //this.logger.debug(variants);
     const mappedResults = this._mapResultToIds(productIds, variants);
-    this.logger.debug(variants, 'Vaiatnstad OUput');
+    this.logger.debug(mappedResults, 'Vaiatnstad OUput');
     return mappedResults;
   }
 
@@ -80,10 +80,8 @@ export class VariantsService {
   }
 
   _mapResultToIds(productIds: string[], variants: Variants[]): Variants[][] {
-    return productIds.map(
-      (id) =>
-        variants.filter((variant: Variants) => variant.product_id === id) ||
-        null,
+    return productIds.map((id) =>
+      variants.filter((variant: Variants) => variant.product_id === id),
     );
   }
 }

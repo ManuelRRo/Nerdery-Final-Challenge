@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import DataLoader from 'dataloader';
-import { Variants } from 'generated/prisma';
-import { VariantsService } from 'src/variants/variants.service';
+import { Variants } from '../../../../generated/prisma';
+import { VariantsService } from '../../../variants/variants.service';
 import { IDataLoaders } from './dataloader.interface';
 
 @Injectable()

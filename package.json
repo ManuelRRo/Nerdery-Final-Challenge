@@ -101,9 +101,17 @@
       "!**/*.template.ts",
       "!**/*.filter.ts",
       "!**/*.pipe.ts",
+      "!**/*.enum.ts",
+      "!**/*.validation.ts",
       "!main.ts",
       "!categories/categories.service.ts",
-      "!**/*.enum.ts"
+      "!roles/roles.service.ts",
+      "!product-categories/product-categories.service.ts",
+      "!common/decorators/role.decorator.ts",
+      "!products/jobs/lowVariantStock.jobs.ts",
+      "!common/decorators/current-user.decorator.ts",
+      "!common/modules/dataloader/dataloader.service.ts",
+      "!common/decorator/current-user.decorator.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"

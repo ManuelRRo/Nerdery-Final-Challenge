@@ -20,7 +20,7 @@ export class CartsDetailsService {
     const productInfo = await this.variantService.getVariantWithProductInfo(
       input.variant_id,
     );
-    console.log(productInfo);
+
     // Verify cart_id exists
     if (!cart_id) {
       throw new Error('Cart not found for user');
@@ -30,7 +30,6 @@ export class CartsDetailsService {
       throw new Error('No price provided');
     }
 
-    console.log('Herre price', input, cart_id);
     return await this.prisma.cartDetails.create({
       data: {
         quantity: input.quantity,

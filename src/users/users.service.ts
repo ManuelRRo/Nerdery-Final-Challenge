@@ -49,7 +49,7 @@ export class UsersService {
   async updatePassword(id: string, password: string) {
     const user = await this.findByUserByName(id);
     if (!user) {
-      return;
+      throw new Error('user not found');
     }
 
     user.password = password;

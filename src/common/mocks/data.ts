@@ -1,4 +1,4 @@
-import { Brands } from 'generated/prisma';
+import { Brands, CartDetails, Prisma } from 'generated/prisma';
 
 export const brands: Brands[] = [
   {
@@ -104,4 +104,77 @@ export const mockPaymentIntent = {
   status: 'requires_payment_method',
   transfer_data: null,
   transfer_group: null,
+};
+/*
+CartDetails mock data
+*/
+export const cartDetailData: CartDetails[] = [
+  {
+    id: '0f5c8172-2c13-43c7-b47b-6d0111d307d1',
+    quantity: 3,
+    price: 32.32,
+    variant_id: '0f5c8172-2c13-43c7-b47b-6d0111d307d1',
+    cart_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+];
+/*
+Orders mock data
+*/
+export const ordersData = [
+  {
+    created_at: new Date('2025-06-01T17:48:30.266Z'),
+    id: '0417dcba-46cc-4987-86f7-e67050effbc2',
+    user_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+  {
+    created_at: new Date('2025-06-01T17:48:30.266Z'),
+    id: '04416701-4774-4ea9-9b72-f75076dc750c',
+    user_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+  {
+    created_at: new Date('2025-06-01T17:48:30.266Z'),
+    id: '1107ae51-dd8e-43e2-8dbd-de36a94c216f',
+    user_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+  {
+    created_at: new Date('2025-06-01T17:48:30.266Z'),
+    id: '14fb24f4-46af-414c-9d4f-519d33484092',
+    user_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+  {
+    created_at: new Date('2025-06-01T17:48:30.266Z'),
+    id: '16623e19-e486-4cd7-b3fc-d807613f8fdd',
+    user_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+  {
+    created_at: new Date('2025-06-01T17:48:30.266Z'),
+    id: '201c933f-23a7-41dd-b781-68faf28359f9',
+    user_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+  {
+    created_at: new Date('2025-06-01T17:48:30.266Z'),
+    id: '23372f19-bd3d-4f7f-b45d-ca6cd8777bd2',
+    user_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+  {
+    created_at: new Date('2025-06-01T17:48:30.266Z'),
+    id: '27bafc18-f62f-4c59-9e01-082888759750',
+    user_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+  {
+    created_at: new Date('2025-06-01T17:48:30.266Z'),
+    id: '315ee53b-5fd3-4241-8645-c3bc472d5aaa',
+    user_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+  {
+    created_at: new Date('2025-06-01T17:48:30.266Z'),
+    id: '351f8b9e-abe9-42be-8531-b2aade5b2d1e',
+    user_id: '9a026d8c-9264-4a2f-b8c0-fd58200d55b8',
+  },
+];
+const id = '9a026d8c-9264-4a2f-b8c0-fd58200d55b8';
+export const dataOrder: Prisma.OrdersCreateInput = {
+  user: {
+    connect: { id },
+  },
 };

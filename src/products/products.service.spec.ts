@@ -6,7 +6,6 @@ import { ProductsService } from './products.service';
 import { Prisma, Size, TextColor } from '../../generated/prisma';
 import { PaginationArgs } from '../common/args/pagination.args';
 import { ProductInput } from './inputs/create-product.input';
-import { Patch } from '@nestjs/common';
 
 describe('Products Service', () => {
   let mockPrismaService: DeepMockProxy<PrismaService>;
