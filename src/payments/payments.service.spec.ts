@@ -84,13 +84,7 @@ describe('Payments Service', () => {
       await expect(result).rejects.toThrow(Error);
     });
   });
-  describe('webhooksEvent', () => {
-    it('should throw an error if signature verification failed', async () => {
-      //Arrange
-      // const req: RawBodyRequest<Request>;
-      // const result = await service.webhooksEvent(req);
-    });
-  });
+
   describe('addPayment', () => {
     it('Should return a payment if exist', async () => {
       //Arrange

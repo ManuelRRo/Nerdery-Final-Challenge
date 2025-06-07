@@ -10,7 +10,6 @@ describe('RolesGuard', () => {
   let guard: RolesGuard;
   let reflector: Reflector;
 
-  // Mock data
   const mockManagerUser: AuthenticatedUserDto = {
     id: '0417dcba-46cc-4987-86f7-e67050effbc2',
     email: 'manager@example.com',

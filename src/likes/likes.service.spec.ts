@@ -22,19 +22,19 @@ describe('Likes Service', () => {
     service = module.get<LikesService>(LikesService);
     mockPrismaService.productCategories.findMany.mockClear();
   });
-  //Like input
+
   const likeInput: LikeInput = {
     productId: '14fb24f4-46af-414c-9d4f-519d33484092',
   };
-  //user_id
+
   const user_id = '9a026d8c-9264-4a2f-b8c0-fd58200d55b8';
-  //Like model prisma
+
   const like: Likes = {
     productId: likeInput.productId,
     user_id,
     createdAt: new Date(),
   };
-  //LikesWhereInput
+
   const query: Prisma.LikesWhereInput = {
     productId: likeInput.productId,
     user: {

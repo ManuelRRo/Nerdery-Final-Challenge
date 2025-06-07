@@ -27,7 +27,6 @@ describe('GqlThrottlerGuard', () => {
         getContext: () => ({ req: mockReq }),
       } as unknown as GqlExecutionContext;
 
-      // Override GqlExecutionContext.create to return our mock
       jest.spyOn(GqlExecutionContext, 'create').mockReturnValue(mockCtx);
 
       const mockExecutionContext = {} as ExecutionContext;

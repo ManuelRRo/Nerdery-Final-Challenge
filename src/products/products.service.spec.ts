@@ -34,7 +34,7 @@ describe('Products Service', () => {
   });
 
   describe('product', () => {
-    it('', async () => {
+    it('Should be call with arguments', async () => {
       //Arrange
       const product = {
         name: 'sunflower',
@@ -207,6 +207,7 @@ describe('Products Service', () => {
         brand_id,
         paginationArgs,
       );
+
       //Assets
       expect(mockPrismaService.products.findMany).toHaveBeenCalledWith({
         skip: 0,

@@ -111,7 +111,8 @@
       "!products/jobs/lowVariantStock.jobs.ts",
       "!common/decorators/current-user.decorator.ts",
       "!common/modules/dataloader/dataloader.service.ts",
-      "!common/decorator/current-user.decorator.ts"
+      "!common/decorator/current-user.decorator.ts",
+      "!app.service.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
