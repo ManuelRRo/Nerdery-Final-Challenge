@@ -216,6 +216,7 @@ exports.Prisma.ProductCategoriesScalarFieldEnum = {
 
 exports.Prisma.LikesScalarFieldEnum = {
   productId: 'productId',
+  createdAt: 'createdAt',
   user_id: 'user_id'
 };
 

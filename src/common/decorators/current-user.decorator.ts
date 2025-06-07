@@ -1,7 +1,7 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Request } from 'express';
-import { ContextWithUser, TokenPayload } from '../dtos/UserRole.dto';
+import { ContextWithUser } from '../dtos/UserRole.dto';
 
 export const CurrentUser = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
@@ -14,7 +14,8 @@ export const CurrentUser = createParamDecorator(
           'CurrentUser decorator requires GqlAuthGuard to be used first',
         );
       }
-      return ctx.user;
+      console.log('Current User', ctx.user);
+      return ctx.user.id;
     }
 
     // Handle HTTP/REST context

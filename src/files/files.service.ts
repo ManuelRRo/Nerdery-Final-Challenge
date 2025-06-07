@@ -1,10 +1,10 @@
 import { Body, Injectable } from '@nestjs/common';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { PrismaService } from '../common/modules/prisma/prisma.service';
 import { Files, Prisma } from 'generated/prisma';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { S3ObjectModel } from './models/s3object.model';
-import { AppService } from 'src/app.service';
+import { AppService } from '../app.service';
 @Injectable()
 export class FilesService {
   constructor(

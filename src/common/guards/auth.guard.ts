@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthenticatedRequest, TokenPayload } from '../dtos/UserRole.dto';
-import { AppService } from 'src/app.service';
+import { AppService } from '../../app.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

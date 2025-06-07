@@ -22,7 +22,7 @@ export class CartsDetailsResolver {
 
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Mutation(() => CartDetailResponse, { name: 'addCartDetailToCart' })
-  @Roles(ROLES.MANAGER)
+  @Roles(ROLES.CLIENT)
   async AddCartItem(
     @Args('input') input: CartDetailInput,
     @CurrentUser() user_id: string,

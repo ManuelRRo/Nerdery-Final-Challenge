@@ -1,14 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Prisma, Products } from 'generated/prisma';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { PrismaService } from '../common/modules/prisma/prisma.service';
 import { ProductInput } from './inputs/create-product.input';
-import { Size, TextColor } from 'src/variants/model/variants.model';
-import { PaginationArgs } from 'src/common/args/pagination.args';
+import { Size, TextColor } from '../variants/model/variants.model';
+import { PaginationArgs } from '../common/args/pagination.args';
 import { ProductActiveInput } from './inputs/changeActiveProduct.input';
 import { UpdateProductInput } from './inputs/updateProduct.input';
 import { GetProductQueryDto } from './args/getProductQuery.args';
-import { PaginationService } from 'src/common/modules/pagination/pagination.service';
-import { Paginated } from 'src/common/modules/pagination/dtos/paginated.dto';
+import { PaginationService } from '../common/modules/pagination/pagination.service';
+import { Paginated } from '../common/modules/pagination/dtos/paginated.dto';
 
 @Injectable()
 export class ProductsService {
@@ -141,6 +141,9 @@ export class ProductsService {
   }
 
   async updateProduct(input: UpdateProductInput) {
+    if (!input) {
+      throw new Error('Input is null');
+    }
     return this.prisma.products.update({
       where: {
         id: input.id,
@@ -171,9 +174,17 @@ export class ProductsService {
   }
 
   async deleteProduct(id: string) {
-    await this.prisma.productCategories.deleteMany({
+    if (id === '') {
+      throw new Error('id can no be empty');
+    }
+
+    const deletedCategory = await this.prisma.productCategories.deleteMany({
       where: { productId: id },
     });
+
+    if (deletedCategory.count === 0) {
+      throw new Error('does not exist a product with that category');
+    }
 
     await this.prisma.variants.deleteMany({
       where: { product_id: id },
@@ -189,7 +200,7 @@ export class ProductsService {
       where: { id: productId },
       include: {
         variants: {
-          where: { stock: 3 }, // Only variants with exactly 3 in stock
+          where: { stock: 3 },
           include: { file: true },
         },
         brand: true,

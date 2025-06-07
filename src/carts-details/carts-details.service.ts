@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { PrismaService } from '../common/modules/prisma/prisma.service';
 import { CartDetailInput } from './inputs/cart-detail.input';
 import { VariantsService } from '../variants/variants.service';
 import { CartService } from '../carts/carts.service';
@@ -20,7 +20,7 @@ export class CartsDetailsService {
     const productInfo = await this.variantService.getVariantWithProductInfo(
       input.variant_id,
     );
-    console.log(productInfo);
+
     // Verify cart_id exists
     if (!cart_id) {
       throw new Error('Cart not found for user');
@@ -30,13 +30,20 @@ export class CartsDetailsService {
       throw new Error('No price provided');
     }
 
-    console.log('Herre price', input, cart_id);
     return await this.prisma.cartDetails.create({
       data: {
         quantity: input.quantity,
         price: productInfo.product.price,
         cart_id,
         variant_id: input.variant_id,
+      },
+    });
+  }
+
+  async getCartDetailByCartId(cart_id: string) {
+    return await this.prisma.cartDetails.findMany({
+      where: {
+        cart_id,
       },
     });
   }

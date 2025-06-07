@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Orders, Prisma } from 'generated/prisma';
+import { CartDetails, Orders, Prisma } from 'generated/prisma';
 import { PaginationArgs } from 'src/common/args/pagination.args';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { PrismaService } from '../common/modules/prisma/prisma.service';
 
 @Injectable()
 export class OrdersService {
@@ -24,13 +24,65 @@ export class OrdersService {
     return orders;
   }
 
-  async createOrder(id: string): Promise<Orders> {
-    const order: Prisma.OrdersCreateInput = {
+  async createOrder(id: string, cartDetails: CartDetails[]): Promise<Orders> {
+    const data: Prisma.OrdersCreateInput = {
       user: {
         connect: { id },
       },
     };
 
-    return await this.prisma.orders.create({ data: order });
+    const order = await this.prisma.orders.create({ data });
+
+    await this.addOrderDetailToOrder(order.id, cartDetails);
+
+    return order;
+  }
+
+  async addOrderDetailToOrder(order_id: string, cartDetails: CartDetails[]) {
+    const data = cartDetails.map((detail) => {
+      const { quantity, price, variant_id } = detail;
+      return {
+        quantity,
+        price,
+        variant_id,
+        orderDetails_id: order_id,
+      };
+    });
+
+    await this.prisma.orderDetails.createMany({
+      data,
+    });
+  }
+
+  async getOrderByPaymentIntent(payment_intent: string) {
+    const query: Prisma.OrdersWhereInput = {
+      payment: {
+        payment_intent,
+      },
+    };
+
+    const include: Prisma.OrdersInclude = {
+      payment: true,
+      orderDetails: {
+        select: {
+          id: true, // include order detail id if needed
+          variants: {
+            select: {
+              id: true, // variant_id is already included here as 'id'
+              stock: true, // the stock number you want
+              product_id: true,
+            },
+          },
+        },
+      },
+    };
+    const order = await this.prisma.orders.findFirst({
+      where: query,
+      include: include,
+    });
+
+    //
+
+    return order;
   }
 }

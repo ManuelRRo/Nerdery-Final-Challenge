@@ -5,6 +5,8 @@ import { AppService } from 'src/app.service';
 import { PrismaService } from 'src/common/modules/prisma/prisma.service';
 import { OrdersService } from '../orders/orders.service';
 import { JwtService } from '@nestjs/jwt';
+import { CartsModule } from 'src/carts/carts.module';
+import { CartsDetailsModule } from 'src/carts-details/carts-details.module';
 
 @Module({
   controllers: [PaymentsController],
@@ -16,5 +18,6 @@ import { JwtService } from '@nestjs/jwt';
     JwtService,
   ],
   exports: [PaymentsService],
+  imports: [CartsModule, CartsDetailsModule],
 })
 export class PaymentsModule {}

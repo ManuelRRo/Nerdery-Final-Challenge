@@ -33,7 +33,7 @@ export class PaymentsController {
     @Body() input: PaymentInput,
     @CurrentUser() id: SignInData,
   ): Promise<string | null> {
-    return this.paymentsService.createPaymentIntent(input, id);
+    return this.paymentsService.createPaymentIntent(id);
   }
 
   @HttpCode(HttpStatus.OK)

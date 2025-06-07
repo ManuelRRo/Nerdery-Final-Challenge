@@ -8,9 +8,9 @@ import {
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../../users/users.service';
 import { ContextWithUser, TokenPayload } from '../dtos/UserRole.dto';
-import { AppService } from 'src/app.service';
+import { AppService } from '../../app.service';
 
 @Injectable()
 export class GqlAuthGuard implements CanActivate {
@@ -27,6 +27,7 @@ export class GqlAuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx =
       GqlExecutionContext.create(context).getContext<ContextWithUser>();
+
     const request = this.getRequest(context);
     const authorization = request.headers?.authorization;
 
@@ -56,7 +57,7 @@ export class GqlAuthGuard implements CanActivate {
       // Extract role names from the nested structure
       const roles =
         userWithRoles?.roles?.map((userRole) => userRole.roles.name) || [];
-
+      console.log('userWithROles', roles);
       ctx.user = {
         id: tokenPayload.sub,
         email: tokenPayload.email,

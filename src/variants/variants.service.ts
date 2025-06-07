@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Variants } from 'generated/prisma';
-import { VariantWithProductInfo } from 'src/common/dtos/Variants.dto';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { VariantWithProductInfo } from '../common/dtos/Variants.dto';
+import { PrismaService } from '../common/modules/prisma/prisma.service';
 
 @Injectable()
 export class VariantsService {
@@ -60,7 +60,7 @@ export class VariantsService {
     const variants = await this.getVariantsByProductIdLoader(productIds);
     //this.logger.debug(variants);
     const mappedResults = this._mapResultToIds(productIds, variants);
-    this.logger.debug(variants, 'Vaiatnstad OUput');
+    this.logger.debug(mappedResults, 'Vaiatnstad OUput');
     return mappedResults;
   }
 
@@ -80,10 +80,8 @@ export class VariantsService {
   }
 
   _mapResultToIds(productIds: string[], variants: Variants[]): Variants[][] {
-    return productIds.map(
-      (id) =>
-        variants.filter((variant: Variants) => variant.product_id === id) ||
-        null,
+    return productIds.map((id) =>
+      variants.filter((variant: Variants) => variant.product_id === id),
     );
   }
 }

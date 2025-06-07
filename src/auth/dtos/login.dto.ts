@@ -6,3 +6,5 @@ export class LoginDto {
   @IsString()
   password: string;
 }
+
+export type AuthResult = { sessionToken: string };

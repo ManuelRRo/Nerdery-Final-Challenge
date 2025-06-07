@@ -10,6 +10,7 @@ import { EmailService } from '../email/email.service';
 import { SendGridClient } from '../email/sendgrid-client';
 import { PaginationModule } from 'src/common/modules/pagination/pagination.module';
 import { PrismaModule } from 'src/common/modules/prisma/prisma.module';
+import { ProductTasksService } from './jobs/lowVariantStock.jobs';
 
 @Module({
   imports: [VariantsModule, PaginationModule, PrismaModule],
@@ -22,6 +23,7 @@ import { PrismaModule } from 'src/common/modules/prisma/prisma.module';
     AppService,
     EmailService,
     SendGridClient,
+    ProductTasksService,
     // { provide: APP_GUARD, useClass: ThrottlerGuard },
   ],
   exports: [ProductsService],
