@@ -58,7 +58,7 @@ export class VariantsService {
     productIds: string[],
   ): Promise<Variants[][]> {
     const variants = await this.getVariantsByProductIdLoader(productIds);
-    //this.logger.debug(variants);
+
     const mappedResults = this._mapResultToIds(productIds, variants);
     this.logger.debug(mappedResults, 'Vaiatnstad OUput');
     return mappedResults;

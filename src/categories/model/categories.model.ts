@@ -8,9 +8,6 @@ export class Categories {
   @Field()
   name: string;
 
-  @Field()
-  parentId: string;
-
   @Field(() => Boolean)
   active: boolean;
 }

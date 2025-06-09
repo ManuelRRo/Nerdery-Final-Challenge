@@ -33,7 +33,6 @@ import { ScheduleModule } from '@nestjs/schedule';
     ConfigModule.forRoot({
       validate,
       isGlobal: true,
-      // envFilePath: `.env`,
     }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -53,7 +52,7 @@ import { ScheduleModule } from '@nestjs/schedule';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
-        global: true, // This makes the module global
+        global: true,
         signOptions: { expiresIn: '30m' },
       }),
     }),

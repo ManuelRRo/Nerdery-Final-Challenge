@@ -61,6 +61,12 @@ type PaginatedProductData {
   meta: Meta!
 }
 
+type Categories {
+  id: String!
+  name: String!
+  active: Boolean!
+}
+
 type Orders {
   id: String!
   user_id: String!
@@ -86,6 +92,9 @@ type Query {
   brand(id: String!): Brand!
   product(id: String!): Products!
   products(offset: Int!, limit: Int!, brand_id: String, parentCategory: String, categoryId: String, size: Size, textColor: TextColors): PaginatedProductData!
+
+  """Return all categories."""
+  Categories: [Categories!]!
   Orders(offset: Int!, limit: Int!): [Orders!]!
   Order: [Orders!]!
 }
