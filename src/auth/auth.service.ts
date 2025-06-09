@@ -12,6 +12,7 @@ import { UsersService } from '../users/users.service';
 import { ForgotPasswordDto } from './dtos/forgotPasswd.dto';
 import { ResetPasswordDto } from './dtos/resetPasswd.dto';
 import { AuthResult, LoginDto } from './dtos/login.dto';
+import { SignUpDto } from './dtos/SignUp.dto';
 
 @Injectable()
 export class AuthService {
@@ -32,7 +33,7 @@ export class AuthService {
 
     return token;
   }
-  // eslint-disable-next-line @typescript-eslint/require-await
+
   async validateUser(input: LoginDto): Promise<SignInData | null> {
     const user = await this.userService.findByUserByName(input.email);
 
@@ -76,5 +77,9 @@ export class AuthService {
       throw new BadRequestException();
     }
     await this.userService.updatePassword(id, passwd);
+  }
+
+  async signUp(data: SignUpDto) {
+    await this.userService.createUser(data);
   }
 }

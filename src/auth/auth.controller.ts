@@ -18,6 +18,7 @@ import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
 import { LoginDto } from './dtos/login.dto';
 import { ForgotPasswordDto } from './dtos/forgotPasswd.dto';
 import { ResetPasswordDto } from './dtos/resetPasswd.dto';
+import { SignUpDto } from './dtos/SignUp.dto';
 
 @Controller('authentication')
 @UseFilters(HttpExceptionFilter)
@@ -28,6 +29,12 @@ export class AuthController {
   @Post('signin')
   login(@Body(new ValidationPipe()) loginDto: LoginDto) {
     return this.authService.authenticate(loginDto);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('signup')
+  signUp(@Body(new ValidationPipe()) SignUpDto: SignUpDto) {
+    return this.authService.signUp(SignUpDto);
   }
 
   @UseGuards(AuthGuard)

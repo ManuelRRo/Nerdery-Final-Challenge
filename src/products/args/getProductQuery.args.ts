@@ -3,11 +3,11 @@ import { Size, TextColor } from 'src/variants/model/variants.model';
 
 @ArgsType()
 export class GetProductQueryDto {
-  @Field(() => Int)
-  offset: number;
+  @Field(() => Int, { defaultValue: 0 })
+  offset?: number = 0;
 
-  @Field(() => Int)
-  limit: number;
+  @Field(() => Int, { defaultValue: 10 })
+  limit?: number = 10;
 
   @Field({ nullable: true })
   brand_id?: string;

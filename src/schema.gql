@@ -46,7 +46,9 @@ type Products {
 type Brand {
   id: String!
   name: String!
-  products(offset: Int!, limit: Int!): [Products!]!
+
+  """associated products related to the selected brand."""
+  products(offset: Int! = 0, limit: Int! = 10): [Products!]!
 }
 
 type Meta {
@@ -88,18 +90,22 @@ type CartDetailResponse {
 }
 
 type Query {
-  brands(offset: Int!, limit: Int!): [Brand!]!
+  """Get all brands."""
+  brands(offset: Int! = 0, limit: Int! = 10): [Brand!]!
+
+  """get Brand by id."""
   brand(id: String!): Brand!
   product(id: String!): Products!
-  products(offset: Int!, limit: Int!, brand_id: String, parentCategory: String, categoryId: String, size: Size, textColor: TextColors): PaginatedProductData!
+  products(offset: Int! = 0, limit: Int! = 10, brand_id: String, parentCategory: String, categoryId: String, size: Size, textColor: TextColors): PaginatedProductData!
 
   """Return all categories."""
   Categories: [Categories!]!
-  Orders(offset: Int!, limit: Int!): [Orders!]!
+  Orders(offset: Int! = 0, limit: Int! = 10): [Orders!]!
   Order: [Orders!]!
 }
 
 type Mutation {
+  """Create a new brand"""
   newBrand(input: CreateBrandInput!): Brand!
   newProduct(input: ProductInput!): Products!
   updateProduct(input: UpdateProductInput!): Products!

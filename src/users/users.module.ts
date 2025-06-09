@@ -4,6 +4,7 @@ import { PrismaService } from 'src/common/modules/prisma/prisma.service';
 import { EmailService } from '../email/email.service';
 import { SendGridClient } from '../email/sendgrid-client';
 import { AppService } from 'src/app.service';
+import { RolesModule } from 'src/roles/roles.module';
 
 @Module({
   providers: [
@@ -14,5 +15,6 @@ import { AppService } from 'src/app.service';
     AppService,
   ],
   exports: [UsersService],
+  imports: [RolesModule],
 })
 export class UsersModule {}

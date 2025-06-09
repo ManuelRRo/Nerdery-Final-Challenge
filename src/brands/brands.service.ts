@@ -13,7 +13,10 @@ export class BrandsService {
   constructor(private prisma: PrismaService) {}
 
   async brands(args: PaginationArgs): Promise<Brands[]> {
-    const { offset } = args;
+    let { offset } = args;
+    if (!offset) {
+      offset = 0;
+    }
     if (offset < 0) {
       throw new BadRequestException('offset can no be negative');
     }

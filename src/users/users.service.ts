@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../common/modules/prisma/prisma.service';
 import { EmailService } from '../email/email.service';
 import { SendEmailDto } from '../email/dtos/sendEmail.dto';
+import { SignUpDto } from 'src/auth/dtos/SignUp.dto';
+import { RoleService } from '../roles/roles.service';
 
 export type User = {
   id: string;
@@ -14,8 +16,9 @@ export class UsersService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly emailService: EmailService,
+    private readonly rolesService: RoleService,
   ) {}
-  // eslint-disable-next-line @typescript-eslint/require-await
+
   async findByUserByName(email: string): Promise<User | null> {
     const user = await this.prisma.users.findUnique({
       where: {
@@ -37,7 +40,7 @@ export class UsersService {
       select: {
         roles: {
           select: {
-            roles: true, // Include the roles relation
+            roles: true,
           },
         },
       },
@@ -69,5 +72,23 @@ export class UsersService {
     };
 
     await this.emailService.sendTestEmail(sendMailDto);
+  }
+
+  async createUser(input: SignUpDto) {
+    const user = await this.findByUserByName(input.email);
+    if (user) {
+      throw new Error(`There is a User Registered with ${input.email}`);
+    }
+    const newUser = await this.prisma.users.create({
+      data: {
+        first_name: input.firstName,
+        last_name: input.lastName,
+        email: input.email,
+        password: input.password,
+        nickname: input.nickname,
+      },
+    });
+
+    await this.rolesService.addUserRol(newUser.id);
   }
 }

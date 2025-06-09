@@ -9,6 +9,9 @@ export class PaginationService {
   ) {
     const count = await repository.aggregate({ _count: { id: true } });
     const totalItems = count._count.id;
+    if (!paginationQueryDto.limit) {
+      paginationQueryDto.limit = 10;
+    }
     const totalPages = Math.ceil(count._count.id / paginationQueryDto.limit);
 
     const response = {

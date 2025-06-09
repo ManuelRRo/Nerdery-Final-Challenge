@@ -2,9 +2,9 @@ import { ArgsType, Field, Int } from '@nestjs/graphql';
 
 @ArgsType()
 export class PaginationArgs {
-  @Field(() => Int)
-  offset: number;
+  @Field(() => Int, { defaultValue: 0 })
+  offset?: number = 0;
 
-  @Field(() => Int)
-  limit: number;
+  @Field(() => Int, { defaultValue: 10 })
+  limit?: number = 10;
 }
