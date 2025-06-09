@@ -5,6 +5,7 @@ import { EmailService } from '../email/email.service';
 import { SendGridClient } from '../email/sendgrid-client';
 import { AppService } from 'src/app.service';
 import { RolesModule } from 'src/roles/roles.module';
+import { CartsModule } from 'src/carts/carts.module';
 
 @Module({
   providers: [
@@ -15,6 +16,6 @@ import { RolesModule } from 'src/roles/roles.module';
     AppService,
   ],
   exports: [UsersService],
-  imports: [RolesModule],
+  imports: [RolesModule, CartsModule],
 })
 export class UsersModule {}

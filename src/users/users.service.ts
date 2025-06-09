@@ -4,6 +4,7 @@ import { EmailService } from '../email/email.service';
 import { SendEmailDto } from '../email/dtos/sendEmail.dto';
 import { SignUpDto } from 'src/auth/dtos/SignUp.dto';
 import { RoleService } from '../roles/roles.service';
+import { CartService } from 'src/carts/carts.service';
 
 export type User = {
   id: string;
@@ -17,6 +18,7 @@ export class UsersService {
     private readonly prisma: PrismaService,
     private readonly emailService: EmailService,
     private readonly rolesService: RoleService,
+    private readonly cartService: CartService,
   ) {}
 
   async findByUserByName(email: string): Promise<User | null> {
@@ -90,5 +92,7 @@ export class UsersService {
     });
 
     await this.rolesService.addUserRol(newUser.id);
+
+    await this.cartService.createCarts(newUser.id);
   }
 }
