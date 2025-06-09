@@ -28,4 +28,7 @@ export class AppService {
   configSendGridKey(): string | undefined {
     return this.configService.get<string>('SENDGRID_API_KEY');
   }
+  configSendGridSenderEmail(): string | undefined {
+    return this.configService.get<string>('SENDGRID_EMAIL');
+  }
 }

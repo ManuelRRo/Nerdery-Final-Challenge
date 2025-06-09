@@ -37,6 +37,9 @@ class EnvironmentVariables {
   SENDGRID_API_KEY: string;
 
   @IsString()
+  SENDGRID_EMAIL: string;
+
+  @IsString()
   DATABASE_URL: string;
 }
 
