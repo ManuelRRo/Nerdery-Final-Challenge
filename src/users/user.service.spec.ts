@@ -9,6 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { Users } from '../../generated/prisma';
 import { SendEmailDto } from '../email/dtos/sendEmail.dto';
 import { RoleService } from '../roles/roles.service';
+import { CartService } from '../carts/carts.service';
 
 describe('', () => {
   let mockPrismaService: DeepMockProxy<PrismaService>;
@@ -24,6 +25,7 @@ describe('', () => {
         SendGridClient,
         AppService,
         ConfigService,
+        CartService,
         RoleService,
         { provide: PrismaService, useValue: mockPrismaService },
       ],

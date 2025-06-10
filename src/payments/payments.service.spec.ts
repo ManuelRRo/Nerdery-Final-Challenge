@@ -120,7 +120,8 @@ describe('Payments Service', () => {
         orderId,
         paymentIntent,
         status,
-        paymentInit,
+        paymentInit.amount,
+        paymentInit.currency,
       );
 
       //Asserts

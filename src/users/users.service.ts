@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../common/modules/prisma/prisma.service';
 import { EmailService } from '../email/email.service';
 import { SendEmailDto } from '../email/dtos/sendEmail.dto';
-import { SignUpDto } from 'src/auth/dtos/SignUp.dto';
+import { SignUpDto } from '../auth/dtos/SignUp.dto';
 import { RoleService } from '../roles/roles.service';
-import { CartService } from 'src/carts/carts.service';
+import { CartService } from '../carts/carts.service';
 
 export type User = {
   id: string;

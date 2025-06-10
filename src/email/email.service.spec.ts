@@ -5,6 +5,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { EmailService } from './email.service';
 import { SendEmailDto } from './dtos/sendEmail.dto';
 import { Users } from '../../generated/prisma';
+import { AppService } from '../app.service';
+import { ConfigService } from '@nestjs/config';
 
 describe('Email Service', () => {
   let mockSendGridClient: DeepMockProxy<SendGridClient>;
@@ -16,6 +18,8 @@ describe('Email Service', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         EmailService,
+        AppService,
+        ConfigService,
         { provide: SendGridClient, useValue: mockSendGridClient },
         { provide: PrismaService, useValue: mockPrismaService },
       ],
