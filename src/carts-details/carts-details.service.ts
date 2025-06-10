@@ -6,8 +6,6 @@ import { CartService } from '../carts/carts.service';
 import { CartDetailResponse } from './response/cartDetail.response';
 import { CartDetailItem } from './dto/CartDetailItem.dto';
 
-// import { VariantWithProductInfo } from 'src/common/dtos/Variants.dto';
-
 @Injectable()
 export class CartsDetailsService {
   constructor(

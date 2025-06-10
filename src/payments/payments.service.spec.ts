@@ -10,6 +10,7 @@ import { VariantsService } from '../variants/variants.service';
 import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 import { CartDetails, Prisma } from '../../generated/prisma';
 import Stripe from 'stripe';
+import { UpdateVariantsStockDto } from 'src/variants/dto/variantUpdateStock.dto';
 
 describe('Payments Service', () => {
   let appService: AppService;
@@ -146,8 +147,20 @@ describe('Payments Service', () => {
           'https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xUlNwdkxINjVZYzRXM1g1KKH-hsIGMgaC8Kyz6vE6LBYjpB_Mhv8RrJGACDBrZgTo3jT0I8rtZ0C6TMmWRqtXktM1esklrlQhae-Q',
         orderId: '1f5c8172-1b16-43c7-b47b-6d0111d789d1',
       };
+      const variantToUpdateStock = [
+        {
+          id: '2eb3522e-dc04-405d-8fec-3e4d97dca321',
+          quantity: 2,
+          price: 23.35,
+          variant_id: '2eb3522e-dc04-405d-8fec-3e4d97dca312',
+          orderDetails_id: '2eb3522e-dc04-405d-8fec-3e4d97dca789',
+        },
+      ];
       const paymentIntent = 'pi_3RWg7nH65Yc4W3X51DgdDCCM';
       mockPrismaService.payments.update.mockResolvedValue(payment);
+      mockPrismaService.orderDetails.findMany.mockResolvedValueOnce(
+        variantToUpdateStock,
+      );
       const status = 'succeed';
       //Act
       const result = await service.updateStatusByPaymentIntent(

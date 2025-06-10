@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Variants } from 'generated/prisma';
 import { VariantWithProductInfo } from '../common/dtos/Variants.dto';
 import { PrismaService } from '../common/modules/prisma/prisma.service';
+import { UpdateVariantsStockDto } from './dto/variantUpdateStock.dto';
 
 @Injectable()
 export class VariantsService {
@@ -77,6 +78,24 @@ export class VariantsService {
     });
 
     return variants;
+  }
+
+  async updateVariantsStock(input: UpdateVariantsStockDto[]) {
+    if (!input || !Array.isArray(input)) {
+      throw new Error('Input must be an array of UpdateVariantsStockDto');
+    }
+    await Promise.allSettled(
+      input.map(async (item) => {
+        await this.prisma.variants.update({
+          where: {
+            id: item.variants.id,
+          },
+          data: {
+            stock: item.variants.stock - item.quantity,
+          },
+        });
+      }),
+    );
   }
 
   _mapResultToIds(productIds: string[], variants: Variants[]): Variants[][] {

@@ -18,7 +18,7 @@ export class OrdersService {
   async getOrdersByUserId(user_id: string): Promise<Orders[] | []> {
     const orders = await this.prisma.orders.findMany({
       where: {
-        user_id, // Replace with actual user ID
+        user_id,
       },
     });
     return orders;
@@ -65,11 +65,11 @@ export class OrdersService {
       payment: true,
       orderDetails: {
         select: {
-          id: true, // include order detail id if needed
+          id: true,
           variants: {
             select: {
-              id: true, // variant_id is already included here as 'id'
-              stock: true, // the stock number you want
+              id: true,
+              stock: true,
               product_id: true,
             },
           },
@@ -80,8 +80,6 @@ export class OrdersService {
       where: query,
       include: include,
     });
-
-    //
 
     return order;
   }

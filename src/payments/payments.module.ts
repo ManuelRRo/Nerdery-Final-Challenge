@@ -7,6 +7,7 @@ import { OrdersService } from '../orders/orders.service';
 import { JwtService } from '@nestjs/jwt';
 import { CartsModule } from 'src/carts/carts.module';
 import { CartsDetailsModule } from 'src/carts-details/carts-details.module';
+import { VariantsModule } from 'src/variants/variants.module';
 
 @Module({
   controllers: [PaymentsController],
@@ -18,6 +19,6 @@ import { CartsDetailsModule } from 'src/carts-details/carts-details.module';
     JwtService,
   ],
   exports: [PaymentsService],
-  imports: [CartsModule, CartsDetailsModule],
+  imports: [CartsModule, CartsDetailsModule, VariantsModule],
 })
 export class PaymentsModule {}

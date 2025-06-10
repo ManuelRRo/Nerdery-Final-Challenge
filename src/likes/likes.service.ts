@@ -8,7 +8,6 @@ import { Prisma } from 'generated/prisma';
 export class LikesService {
   constructor(private readonly prisma: PrismaService) {}
   async likedProduct(input: LikeInput, user_id: string): Promise<Likes | []> {
-    // need validate if register already exsit
     const { productId } = input;
     return await this.prisma.likes.create({
       data: {
@@ -19,7 +18,6 @@ export class LikesService {
   }
 
   async getLastLikeByProductId(productId: string) {
-    // 1. Get the last user who liked this product but hasn't purchased it
     const query: Prisma.LikesWhereInput = {
       productId,
       user: {

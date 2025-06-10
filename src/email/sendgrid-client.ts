@@ -23,5 +23,3 @@ export class SendGridClient {
     }
   }
 }
-
-//NOTE You have to set "esModuleInterop" to true in your tsconfig file to be able to use the default key in import.

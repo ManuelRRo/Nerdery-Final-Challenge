@@ -24,7 +24,7 @@ export class UsersService {
   async findByUserByName(email: string): Promise<User | null> {
     const user = await this.prisma.users.findUnique({
       where: {
-        email, // Your email variable here
+        email,
       },
       select: {
         id: true,

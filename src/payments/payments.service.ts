@@ -7,6 +7,8 @@ import { OrdersService } from '../orders/orders.service';
 import { SignInData } from '../common/dtos/UserRole.dto';
 import { CartService } from '../carts/carts.service';
 import { CartsDetailsService } from '../carts-details/carts-details.service';
+import { UpdateVariantsStockDto } from 'src/variants/dto/variantUpdateStock.dto';
+import { VariantsService } from '../variants/variants.service';
 
 @Injectable()
 export class PaymentsService {
@@ -17,6 +19,7 @@ export class PaymentsService {
     private readonly orderService: OrdersService,
     private readonly cartService: CartService,
     private readonly cartDetailService: CartsDetailsService,
+    private readonly variantService: VariantsService,
   ) {
     this.stripe = new Stripe(this.appService.configStripeSecret() as string, {
       typescript: true,
@@ -133,10 +136,29 @@ export class PaymentsService {
       status,
     };
 
-    return await this.prisma.payments.update({
+    const payment = await this.prisma.payments.update({
       where: { payment_intent: paymentIntent },
       data: { status: data.status },
     });
+
+    const variants: UpdateVariantsStockDto[] =
+      await this.prisma.orderDetails.findMany({
+        where: {
+          orderDetails_id: payment.orderId,
+        },
+        select: {
+          quantity: true,
+          variants: {
+            select: {
+              id: true,
+              stock: true,
+            },
+          },
+        },
+      });
+
+    this.variantService.updateVariantsStock(variants);
+    return payment;
   }
 
   calculateTotalAmountInCents(cartDetails: CartDetails[]) {

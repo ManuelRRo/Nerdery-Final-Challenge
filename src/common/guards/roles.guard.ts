@@ -31,7 +31,6 @@ export class RolesGuard implements CanActivate {
     const ctx = gqlContext.getContext<{ user: AuthenticatedUserDto }>();
 
     if (!ctx.user) {
-      this.logger.warn('No user found in request context');
       throw new ForbiddenException('User not authenticated');
     }
 

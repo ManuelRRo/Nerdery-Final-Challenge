@@ -36,7 +36,6 @@ export class GqlAuthGuard implements CanActivate {
     }
 
     const token = authorization.split(' ')[1];
-    this.logger.debug(token, 'TOKEN');
 
     if (!token) {
       throw new UnauthorizedException('No token provided');
@@ -57,7 +56,7 @@ export class GqlAuthGuard implements CanActivate {
       // Extract role names from the nested structure
       const roles =
         userWithRoles?.roles?.map((userRole) => userRole.roles.name) || [];
-      console.log('userWithROles', roles);
+
       ctx.user = {
         id: tokenPayload.sub,
         email: tokenPayload.email,
