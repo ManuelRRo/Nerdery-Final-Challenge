@@ -1,10 +1,11 @@
-import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
+import { CartDetailItem } from '../dto/CartDetailItem.dto';
 
 @ObjectType()
 export class CartDetailResponse {
-  @Field(() => Int)
-  quantity: number;
-
   @Field(() => Float)
-  price: number;
+  total: number;
+
+  @Field(() => [CartDetailItem])
+  items: CartDetailItem[];
 }

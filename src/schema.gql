@@ -84,7 +84,18 @@ type Likes {
   productId: String!
 }
 
+type CartDetailItem {
+  name: String!
+  quantity: Int!
+  price: Float!
+}
+
 type CartDetailResponse {
+  total: Float!
+  items: [CartDetailItem!]!
+}
+
+type AddCartDetailResponse {
   quantity: Int!
   price: Float!
 }
@@ -102,6 +113,9 @@ type Query {
   Categories: [Categories!]!
   Orders(offset: Int! = 0, limit: Int! = 10): [Orders!]!
   Order: [Orders!]!
+
+  """Give a summary of the total amount of the cart and item on it."""
+  getCartStatus: CartDetailResponse!
 }
 
 type Mutation {
@@ -112,7 +126,7 @@ type Mutation {
   disableOrEnableProduct(input: ProductActiveInput!): Products!
   deleteProduct(id: String!): String
   likeProduct(input: LikeInput!): Likes!
-  addCartDetailToCart(input: CartDetailInput!): CartDetailResponse!
+  addCartDetailToCart(input: CartDetailInput!): AddCartDetailResponse!
 }
 
 input CreateBrandInput {

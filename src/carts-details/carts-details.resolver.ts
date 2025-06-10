@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { CartsDetailsService } from './carts-details.service';
 import { UseFilters, UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/common/guards/gql-auth.guard';
@@ -11,6 +11,7 @@ import { CartService } from '../carts/carts.service';
 import { CartDetailInput } from './inputs/cart-detail.input';
 import { CartDetailModel } from 'src/carts-details/model/cart-detail.model';
 import { GraphQLExceptionsFilter } from 'src/common/filters/gql-exception.filter';
+import { AddCartDetailResponse } from './response/addCartDetail.response';
 
 @Resolver(() => CartDetailModel)
 @UseFilters(GraphQLExceptionsFilter)
@@ -21,12 +22,23 @@ export class CartsDetailsResolver {
   ) {}
 
   @UseGuards(GqlAuthGuard, RolesGuard)
-  @Mutation(() => CartDetailResponse, { name: 'addCartDetailToCart' })
+  @Mutation(() => AddCartDetailResponse, { name: 'addCartDetailToCart' })
   @Roles(ROLES.CLIENT)
   async AddCartItem(
     @Args('input') input: CartDetailInput,
     @CurrentUser() user_id: string,
   ) {
     return this.cartsDetailsService.addCartDetail(input, user_id);
+  }
+
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Query(() => CartDetailResponse, {
+    name: 'getCartStatus',
+    description:
+      'Give a summary of the total amount of the cart and item on it.',
+  })
+  @Roles(ROLES.CLIENT)
+  async getCartStatus(@CurrentUser() user_id: string) {
+    return this.cartsDetailsService.getCartStatus(user_id);
   }
 }
