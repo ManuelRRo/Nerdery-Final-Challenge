@@ -13,7 +13,6 @@ import {
 import { PaymentsService } from './payments.service';
 import { Response } from 'express';
 import { AppService } from 'src/app.service';
-import { PaymentInput } from './inputs/payments.input';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { SignInData } from 'src/common/dtos/UserRole.dto';
@@ -30,7 +29,6 @@ export class PaymentsController {
   @HttpCode(HttpStatus.OK)
   @Post('intents')
   async createPaymentIntent(
-    @Body() input: PaymentInput,
     @CurrentUser() id: SignInData,
   ): Promise<string | null> {
     return this.paymentsService.createPaymentIntent(id);

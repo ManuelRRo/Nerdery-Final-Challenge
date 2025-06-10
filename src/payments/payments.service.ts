@@ -2,7 +2,6 @@ import { Injectable, RawBodyRequest } from '@nestjs/common';
 import { AppService } from '../app.service';
 import { PrismaService } from '../common/modules/prisma/prisma.service';
 import Stripe from 'stripe';
-import { PaymentInput } from './inputs/payments.input';
 import { CartDetails, Payments, Prisma } from 'generated/prisma';
 import { OrdersService } from '../orders/orders.service';
 import { SignInData } from '../common/dtos/UserRole.dto';
@@ -32,7 +31,7 @@ export class PaymentsService {
     );
 
     let order;
-    const amount = this.calculateTotalAmount(cartDetails);
+    const amount = this.calculateTotalAmountInCents(cartDetails);
 
     if (amount > 0) {
       order = await this.orderService.createOrder(userSign.userId, cartDetails);
@@ -53,10 +52,8 @@ export class PaymentsService {
         order.id,
         paymentIntent.id,
         paymentIntent.status,
-        {
-          amount,
-          currency,
-        },
+        amount,
+        currency,
       );
       const jsonString = JSON.stringify(paymentIntent.client_secret);
       return jsonString;
@@ -112,12 +109,13 @@ export class PaymentsService {
     orderId: string,
     paymentIntent_id: string,
     status: string,
-    input: PaymentInput,
+    amount: number,
+    currency: string,
   ): Promise<Payments> {
     const paymentInit: Prisma.PaymentsCreateInput = {
       status: status,
-      amount: input.amount,
-      currency: input.currency,
+      amount,
+      currency,
       receipt_url: 'url',
       payment_intent: paymentIntent_id,
       order: {
@@ -141,11 +139,11 @@ export class PaymentsService {
     });
   }
 
-  calculateTotalAmount(cartDetails: CartDetails[]) {
+  calculateTotalAmountInCents(cartDetails: CartDetails[]) {
     const amount = cartDetails.reduce((sum, item) => {
       return sum + item.price * item.quantity;
     }, 0);
 
-    return amount;
+    return amount * 100;
   }
 }
